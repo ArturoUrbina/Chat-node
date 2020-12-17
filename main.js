@@ -8,13 +8,9 @@ var messages = [{
   text: "CHAT",
 }];
 
+app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
-// el socket escuchará el evento new-message y los traera
-// en data con el método push
-// para notificar a los clientes
-// para conectar en privado socket.emit
-// pero como es una sala de chat entonces
-//io.sockets.emit 
+
 io.on('connection', function(socket) {  
   console.log('Alguien se ha conectado ');
   socket.emit('messages', messages);
@@ -26,6 +22,6 @@ io.on('connection', function(socket) {
   });
 });
 
-server.listen(8080, function() {  
+server.listen(app.get('port'), function() {
   console.log("Servidor corriendo en http://localhost:8080");
 });
